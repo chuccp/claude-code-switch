@@ -1,0 +1,10 @@
+debug_mode = false
+theme = "Light"
+[window]
+width = 800
+height = 600
+x = 1320
+y = 594
+[dialog]
+width = 700
+height = 550

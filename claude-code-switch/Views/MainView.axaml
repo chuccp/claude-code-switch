@@ -1,0 +1,190 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ConsoleApp1.ViewModels"
+             xmlns:models="using:ConsoleApp1.Models"
+             x:Class="ConsoleApp1.Views.MainView"
+             x:DataType="vm:MainViewModel">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- 工具栏/标题栏 -->
+        <Border Grid.Row="0"
+                Classes="titlebar"
+                Padding="16,8"
+                x:Name="TitleBar"
+                PointerPressed="OnTitleBarPointerPressed">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <!-- 左侧：标题和按钮 -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <TextBlock Text="Claude Code"
+                              FontWeight="Bold"
+                              FontSize="14"
+                              VerticalAlignment="Center"/>
+
+                    <TextBlock Text="配置切换器"
+                              FontSize="12"
+                              VerticalAlignment="Center"
+                              Foreground="{DynamicResource TextSecondaryBrush}"/>
+
+                    <Button Content="+ 新增"
+                           Command="{Binding AddCommand}"
+                           Classes="accent"
+                           CornerRadius="6"
+                           Padding="12,6"
+                           FontSize="12"/>
+
+                    <Button Content="~ 刷新"
+                           Command="{Binding RefreshCommand}"
+                           CornerRadius="6"
+                           Padding="12,6"
+                           FontSize="12"/>
+
+                    <ComboBox x:Name="ThemeComboBox"
+                             ItemsSource="{Binding Themes}"
+                             SelectedItem="{Binding CurrentTheme, Mode=TwoWay}"
+                             Padding="12,4"
+                             FontSize="12"
+                             MinWidth="100"
+                             VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 右侧：窗口控制按钮 -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="0" VerticalAlignment="Center">
+                    <Button x:Name="MinimizeButton"
+                            Width="40" Height="32"
+                            Background="Transparent"
+                            CornerRadius="0"
+                            Click="OnMinimizeClick"
+                            BorderThickness="0">
+                        <TextBlock Text="─" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}" FontWeight="Bold"/>
+                    </Button>
+                    <Button x:Name="MaximizeButton"
+                            Width="40" Height="32"
+                            Background="Transparent"
+                            CornerRadius="0"
+                            Click="OnMaximizeClick"
+                            BorderThickness="0">
+                        <TextBlock Text="□" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                    </Button>
+                    <Button x:Name="CloseButton"
+                            Width="40" Height="32"
+                            Background="Transparent"
+                            CornerRadius="0"
+                            Click="OnCloseClick"
+                            BorderThickness="0">
+                        <TextBlock Text="✕" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 主面板 - 响应式卡片网格 -->
+        <ScrollViewer Grid.Row="1"
+                     VerticalScrollBarVisibility="Auto"
+                     AllowAutoHide="False">
+            <Border Padding="16,16,4,16">
+                <ItemsControl ItemsSource="{Binding Profiles}"
+                              x:Name="ProfilesItemsControl"
+                              SizeChanged="OnItemsControlSizeChanged">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <!-- 横向排列，自动换行 -->
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="models:ConfigProfile">
+                            <Border Classes="card"
+                                   Margin="0,0,12,12"
+                                   Height="150"
+                                   HorizontalAlignment="Stretch"
+                                   PointerPressed="OnCardPointerPressed"
+                                   Cursor="Hand">
+
+                                <!-- 配置信息 -->
+                                <Grid RowDefinitions="Auto,Auto,*" HorizontalAlignment="Stretch">
+                                    <!-- 顶部标签 -->
+                                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8">
+                                        <Border Background="{DynamicResource SuccessBrush}"
+                                                CornerRadius="4"
+                                                Padding="6,2"
+                                                IsVisible="{Binding IsSelected}">
+                                            <TextBlock Text="当前"
+                                                      Foreground="White"
+                                                      FontSize="10"
+                                                      FontWeight="Bold"/>
+                                        </Border>
+                                        <Border Background="{DynamicResource AccentBrush}"
+                                                CornerRadius="4"
+                                                Padding="6,2"
+                                                IsVisible="{Binding IsReadonly}">
+                                            <TextBlock Text="系统"
+                                                      Foreground="White"
+                                                      FontSize="10"
+                                                      FontWeight="Bold"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <!-- 配置名称 -->
+                                    <TextBlock Grid.Row="1"
+                                              Text="{Binding Name}"
+                                              FontSize="18"
+                                              FontWeight="Bold"
+                                              Margin="0,8,0,0"
+                                              TextTrimming="CharacterEllipsis"/>
+
+                                    <!-- 配置详情 -->
+                                    <Grid Grid.Row="2" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" Margin="0,4,0,0"
+                                          VerticalAlignment="Top">
+                                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                                  Text="Model: "
+                                                  Foreground="{DynamicResource TextSecondaryBrush}"
+                                                  FontSize="13"/>
+                                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                                  Text="{Binding Env.AnthropicModel}"
+                                                  FontSize="13"
+                                                  TextTrimming="CharacterEllipsis"/>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                                  Text="URL: "
+                                                  Foreground="{DynamicResource TextSecondaryBrush}"
+                                                  FontSize="13"
+                                                  Margin="0,2,0,0"/>
+                                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                                  Text="{Binding Env.AnthropicBaseUrl}"
+                                                  FontSize="13"
+                                                  TextTrimming="CharacterEllipsis"
+                                                  Margin="0,2,0,0"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+        </ScrollViewer>
+
+        <!-- 状态栏 -->
+        <Border Grid.Row="2"
+               Classes="statusbar"
+               Padding="16,8">
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <TextBlock Text="*"
+                          Foreground="{DynamicResource SuccessBrush}"
+                          FontSize="10"/>
+                <TextBlock Text="{Binding SelectedProfileName, StringFormat='当前配置：{0}'}"
+                          FontSize="12"/>
+                <TextBlock Text="|"
+                          Foreground="{DynamicResource BorderBrush}"
+                          FontSize="10"/>
+                <TextBlock Text="{Binding Profiles.Count, StringFormat='{}{0} 个配置'}"
+                          Foreground="{DynamicResource TextSecondaryBrush}"
+                          FontSize="11"/>
+
+                <TextBlock Text="调试模式"
+                          Foreground="{DynamicResource WarningBrush}"
+                          FontSize="11"
+                          IsVisible="{Binding DebugMode}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

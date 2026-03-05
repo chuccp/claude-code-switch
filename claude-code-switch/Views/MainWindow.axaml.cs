@@ -1,0 +1,53 @@
+using System;
+using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
+using ConsoleApp1.ViewModels;
+
+namespace ConsoleApp1.Views;
+
+public partial class MainWindow : Window
+{
+    private readonly MainViewModel _viewModel;
+
+    public MainWindow()
+    {
+        InitializeComponent();
+        _viewModel = new MainViewModel();
+        DataContext = _viewModel;
+
+        // 处理编辑请求
+        _viewModel.RequestEdit += profile =>
+        {
+            var dialogVm = new EditDialogViewModel(_viewModel);
+            dialogVm.OpenEdit(profile);
+            OpenDialog(dialogVm);
+        };
+
+        _viewModel.RequestAdd += () =>
+        {
+            var dialogVm = new EditDialogViewModel(_viewModel);
+            dialogVm.OpenAdd();
+            OpenDialog(dialogVm);
+        };
+    }
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    private async void OpenDialog(EditDialogViewModel viewModel)
+    {
+        var dialog = new EditDialogWindow { DataContext = viewModel };
+        viewModel.CloseRequested += () => dialog.Close();
+        await dialog.ShowDialog(this);
+    }
+
+    protected override void OnClosing(WindowClosingEventArgs e)
+    {
+        // 保存窗口位置
+        var pos = Position;
+        _viewModel.SaveWindowConfig(Width, Height, pos.X, pos.Y);
+        base.OnClosing(e);
+    }
+}

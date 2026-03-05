@@ -1,0 +1,301 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="ConsoleApp1.App"
+             RequestedThemeVariant="{x:Static ThemeVariant.Dark}">
+    
+    <Application.Resources>
+        <!-- 通用资源 - 不依赖主题 -->
+        <CornerRadius x:Key="DefaultCornerRadius">8</CornerRadius>
+        <CornerRadius x:Key="LargeCornerRadius">14</CornerRadius>
+        <Thickness x:Key="DefaultPadding">12,6</Thickness>
+        <Thickness x:Key="CardPadding">20</Thickness>
+
+        <!-- 深色主题资源 -->
+        <SolidColorBrush x:Key="AppBackgroundBrush.Dark">#0D0D12</SolidColorBrush>
+        <SolidColorBrush x:Key="TitleBarBackgroundBrush.Dark">#16161E</SolidColorBrush>
+        <SolidColorBrush x:Key="CardBackgroundBrush.Dark">#1C1C26</SolidColorBrush>
+        <SolidColorBrush x:Key="PanelBackgroundBrush.Dark">#16161E</SolidColorBrush>
+        <SolidColorBrush x:Key="SurfaceBackgroundBrush.Dark">#252530</SolidColorBrush>
+        <SolidColorBrush x:Key="BorderBrush.Dark">#2A2A36</SolidColorBrush>
+        <SolidColorBrush x:Key="CardBorderBrush.Dark">#323240</SolidColorBrush>
+        <SolidColorBrush x:Key="DividerBrush.Dark">#2A2A36</SolidColorBrush>
+        <SolidColorBrush x:Key="TextPrimaryBrush.Dark">#FFFFFF</SolidColorBrush>
+        <SolidColorBrush x:Key="TextSecondaryBrush.Dark">#9CA3B0</SolidColorBrush>
+        <SolidColorBrush x:Key="TextTertiaryBrush.Dark">#6B7280</SolidColorBrush>
+        <SolidColorBrush x:Key="TextDisabledBrush.Dark">#4B5563</SolidColorBrush>
+        <SolidColorBrush x:Key="AccentBrush.Dark">#7C3AED</SolidColorBrush>
+        <SolidColorBrush x:Key="AccentHoverBrush.Dark">#6D28D9</SolidColorBrush>
+        <SolidColorBrush x:Key="AccentLightBrush.Dark">#8B5CF6</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBackgroundBrush.Dark">#2A2A36</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonHoverBrush.Dark">#363645</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonPressedBrush.Dark">#404050</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBorderBrush.Dark">#3A3A48</SolidColorBrush>
+        <SolidColorBrush x:Key="InputBackgroundBrush.Dark">#1C1C26</SolidColorBrush>
+        <SolidColorBrush x:Key="InputBorderBrush.Dark">#323240</SolidColorBrush>
+        <SolidColorBrush x:Key="InputFocusedBorderBrush.Dark">#7C3AED</SolidColorBrush>
+        <SolidColorBrush x:Key="SuccessBrush.Dark">#10B981</SolidColorBrush>
+        <SolidColorBrush x:Key="SuccessBackgroundBrush.Dark">#064E3B</SolidColorBrush>
+        <SolidColorBrush x:Key="WarningBrush.Dark">#F59E0B</SolidColorBrush>
+        <SolidColorBrush x:Key="WarningBackgroundBrush.Dark">#78350F</SolidColorBrush>
+        <SolidColorBrush x:Key="ErrorBrush.Dark">#EF4444</SolidColorBrush>
+        <SolidColorBrush x:Key="ErrorBackgroundBrush.Dark">#7F1D1D</SolidColorBrush>
+        <SolidColorBrush x:Key="InfoBrush.Dark">#3B82F6</SolidColorBrush>
+        <SolidColorBrush x:Key="ScrollBarThumbBrush.Dark">#3A3A48</SolidColorBrush>
+        <SolidColorBrush x:Key="ScrollBarThumbHoverBrush.Dark">#4A4A58</SolidColorBrush>
+
+        <!-- 浅色主题资源 -->
+        <SolidColorBrush x:Key="AppBackgroundBrush.Light">#F3F4F6</SolidColorBrush>
+        <SolidColorBrush x:Key="TitleBarBackgroundBrush.Light">#FFFFFF</SolidColorBrush>
+        <SolidColorBrush x:Key="CardBackgroundBrush.Light">#FFFFFF</SolidColorBrush>
+        <SolidColorBrush x:Key="PanelBackgroundBrush.Light">#F9FAFB</SolidColorBrush>
+        <SolidColorBrush x:Key="SurfaceBackgroundBrush.Light">#FFFFFF</SolidColorBrush>
+        <SolidColorBrush x:Key="BorderBrush.Light">#E5E7EB</SolidColorBrush>
+        <SolidColorBrush x:Key="CardBorderBrush.Light">#E2E8F0</SolidColorBrush>
+        <SolidColorBrush x:Key="DividerBrush.Light">#E5E7EB</SolidColorBrush>
+        <SolidColorBrush x:Key="TextPrimaryBrush.Light">#111827</SolidColorBrush>
+        <SolidColorBrush x:Key="TextSecondaryBrush.Light">#6B7280</SolidColorBrush>
+        <SolidColorBrush x:Key="TextTertiaryBrush.Light">#9CA3AF</SolidColorBrush>
+        <SolidColorBrush x:Key="TextDisabledBrush.Light">#D1D5DB</SolidColorBrush>
+        <SolidColorBrush x:Key="AccentBrush.Light">#7C3AED</SolidColorBrush>
+        <SolidColorBrush x:Key="AccentHoverBrush.Light">#6D28D9</SolidColorBrush>
+        <SolidColorBrush x:Key="AccentLightBrush.Light">#8B5CF6</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBackgroundBrush.Light">#F3F4F6</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonHoverBrush.Light">#E5E7EB</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonPressedBrush.Light">#D1D5DB</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBorderBrush.Light">#D1D5DB</SolidColorBrush>
+        <SolidColorBrush x:Key="InputBackgroundBrush.Light">#FFFFFF</SolidColorBrush>
+        <SolidColorBrush x:Key="InputBorderBrush.Light">#D1D5DB</SolidColorBrush>
+        <SolidColorBrush x:Key="InputFocusedBorderBrush.Light">#7C3AED</SolidColorBrush>
+        <SolidColorBrush x:Key="SuccessBrush.Light">#059669</SolidColorBrush>
+        <SolidColorBrush x:Key="SuccessBackgroundBrush.Light">#D1FAE5</SolidColorBrush>
+        <SolidColorBrush x:Key="WarningBrush.Light">#D97706</SolidColorBrush>
+        <SolidColorBrush x:Key="WarningBackgroundBrush.Light">#FEF3C7</SolidColorBrush>
+        <SolidColorBrush x:Key="ErrorBrush.Light">#DC2626</SolidColorBrush>
+        <SolidColorBrush x:Key="ErrorBackgroundBrush.Light">#FEE2E2</SolidColorBrush>
+        <SolidColorBrush x:Key="InfoBrush.Light">#2563EB</SolidColorBrush>
+        <SolidColorBrush x:Key="ScrollBarThumbBrush.Light">#C1C1C1</SolidColorBrush>
+        <SolidColorBrush x:Key="ScrollBarThumbHoverBrush.Light">#A1A1A1</SolidColorBrush>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme/>
+
+        <!-- === 全局控件样式 === -->
+
+        <!-- 窗口背景 -->
+        <Style Selector="Window">
+            <Setter Property="Background" Value="{DynamicResource AppBackgroundBrush}"/>
+        </Style>
+
+        <!-- 用户控件 -->
+        <Style Selector="UserControl">
+            <Setter Property="Background" Value="{DynamicResource AppBackgroundBrush}"/>
+        </Style>
+
+        <!-- 文本块 - 默认文字样式 -->
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+
+        <!-- 边框 - 统一圆角 -->
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="{StaticResource LargeCornerRadius}"/>
+            <Setter Property="Padding" Value="{StaticResource CardPadding}"/>
+        </Style>
+
+        <!-- 按钮 - 统一样式 -->
+        <Style Selector="Button">
+            <Setter Property="CornerRadius" Value="{StaticResource DefaultCornerRadius}"/>
+            <Setter Property="Padding" Value="{StaticResource DefaultPadding}"/>
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <!-- 按钮 - 悬停效果 -->
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+        </Style>
+
+        <!-- 按钮 - 按下效果 -->
+        <Style Selector="Button:pressed">
+            <Setter Property="Background" Value="{DynamicResource ButtonPressedBrush}"/>
+        </Style>
+
+        <!-- 按钮 - 禁用状态 -->
+        <Style Selector="Button:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}"/>
+        </Style>
+
+        <!-- 按钮 - 主按钮样式 -->
+        <Style Selector="Button.accent">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}"/>
+        </Style>
+
+        <Style Selector="Button.accent:pointerover">
+            <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentHoverBrush}"/>
+        </Style>
+
+        <!-- 输入框 -->
+        <Style Selector="TextBox">
+            <Setter Property="CornerRadius" Value="{StaticResource DefaultCornerRadius}"/>
+            <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="MinHeight" Value="36"/>
+        </Style>
+
+        <Style Selector="TextBox:pointerover">
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+        </Style>
+
+        <Style Selector="TextBox:focus">
+            <Setter Property="BorderBrush" Value="{DynamicResource InputFocusedBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="2"/>
+        </Style>
+
+        <Style Selector="TextBox:disabled">
+            <Setter Property="Background" Value="{DynamicResource SurfaceBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}"/>
+        </Style>
+
+        <!-- 下拉框 -->
+        <Style Selector="ComboBox">
+            <Setter Property="CornerRadius" Value="{StaticResource DefaultCornerRadius}"/>
+            <Setter Property="Background" Value="{DynamicResource ButtonBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="MinHeight" Value="36"/>
+        </Style>
+
+        <Style Selector="ComboBox:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+        </Style>
+
+        <!-- ComboBoxItem -->
+        <Style Selector="ComboBoxItem">
+            <Setter Property="Background" Value="{DynamicResource SurfaceBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="Padding" Value="12,8"/>
+        </Style>
+
+        <Style Selector="ComboBoxItem:selected">
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style Selector="ComboBoxItem:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+        </Style>
+
+        <!-- 滚动条 -->
+        <Style Selector="ScrollViewer">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <Style Selector="ScrollBar">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <Style Selector="ScrollBar:horizontal">
+            <Setter Property="MinHeight" Value="10"/>
+        </Style>
+
+        <Style Selector="ScrollBar:vertical">
+            <Setter Property="MinWidth" Value="10"/>
+        </Style>
+
+        <!-- 滚动条滑块 -->
+        <Style Selector="Thumb">
+            <Setter Property="Background" Value="{DynamicResource ScrollBarThumbBrush}"/>
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
+
+        <Style Selector="Thumb:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ScrollBarThumbHoverBrush}"/>
+        </Style>
+
+        <!-- 网格分割器 -->
+        <Style Selector="GridSplitter">
+            <Setter Property="Background" Value="{DynamicResource BorderBrush}"/>
+        </Style>
+
+        <!-- 标签页 -->
+        <Style Selector="TabItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+            <Setter Property="Padding" Value="16,8"/>
+        </Style>
+
+        <Style Selector="TabItem:selected">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+
+        <Style Selector="TabItem:pointerover">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+
+        <!-- 复选框 -->
+        <Style Selector="CheckBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+
+        <!-- 单选框 -->
+        <Style Selector="RadioButton">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        </Style>
+
+        <!-- 进度条 -->
+        <Style Selector="ProgressBar">
+            <Setter Property="Background" Value="{DynamicResource InputBorderBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+        </Style>
+
+        <!-- 工具提示 -->
+        <Style Selector="ToolTip">
+            <Setter Property="Background" Value="{DynamicResource SurfaceBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="{StaticResource DefaultCornerRadius}"/>
+            <Setter Property="Padding" Value="8,6"/>
+        </Style>
+
+        <!-- === 自定义类样式 === -->
+
+        <!-- 标题栏样式 -->
+        <Style Selector="Border.titlebar">
+            <Setter Property="Background" Value="{DynamicResource TitleBarBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        </Style>
+
+        <!-- 状态栏样式 -->
+        <Style Selector="Border.statusbar">
+            <Setter Property="Background" Value="{DynamicResource TitleBarBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+            <Setter Property="BorderThickness" Value="0,1,0,0"/>
+        </Style>
+
+        <!-- 分隔线样式 -->
+        <Style Selector="Border.divider">
+            <Setter Property="Background" Value="{DynamicResource DividerBrush}"/>
+            <Setter Property="MinHeight" Value="1"/>
+        </Style>
+    </Application.Styles>
+</Application>

@@ -1,0 +1,16 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="using:ConsoleApp1.Views"
+        x:Class="ConsoleApp1.Views.MainWindow"
+        Title="Claude Code 配置切换器"
+        Width="800" Height="600"
+        MinWidth="600" MinHeight="400"
+        WindowStartupLocation="CenterScreen"
+        CanResize="True"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        SystemDecorations="BorderOnly">
+
+    <views:MainView/>
+</Window>

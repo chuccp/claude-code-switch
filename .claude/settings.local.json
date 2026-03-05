@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//mnt/c/Users/cao/RiderProjects/ConsoleApp1/**)",
+      "Bash(dotnet build)",
+      "mcp__ide__getDiagnostics"
+    ]
+  }
+}
