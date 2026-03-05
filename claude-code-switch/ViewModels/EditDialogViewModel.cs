@@ -2,6 +2,7 @@ using System;
 using System.Reactive;
 using System.Text.Json;
 using ConsoleApp1.Models;
+using ConsoleApp1.Services;
 using ReactiveUI;
 
 namespace ConsoleApp1.ViewModels;
@@ -66,8 +67,13 @@ public class EditDialogViewModel : ReactiveObject
         }
     }
 
-    public string Title => Mode == DialogMode.Add ? "创建新配置" : "编辑配置";
-    public string ConfirmText => Mode == DialogMode.Add ? "确定" : "保存";
+    public string Title => Mode == DialogMode.Add 
+        ? LanguageService.GetText("EditDialogTitle") 
+        : LanguageService.GetText("EditDialogTitle");
+    
+    public string ConfirmText => Mode == DialogMode.Add 
+        ? LanguageService.GetText("EditDialogSave") 
+        : LanguageService.GetText("EditDialogSave");
 
     public EditTab CurrentTab
     {
@@ -245,7 +251,7 @@ public class EditDialogViewModel : ReactiveObject
         }
         catch (JsonException ex)
         {
-            JsonError = $"JSON 错误：{ex.Message}";
+            JsonError = $"{LanguageService.GetText("JsonError")}: {ex.Message}";
         }
         
         this.RaisePropertyChanged(nameof(CanSave));

@@ -1,6 +1,8 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using ConsoleApp1.Models;
+using ConsoleApp1.Services;
 using ConsoleApp1.ViewModels;
 
 namespace ConsoleApp1.Views;
@@ -14,6 +16,9 @@ public partial class MainWindow : Window
         InitializeComponent();
         _viewModel = new MainViewModel();
         DataContext = _viewModel;
+        
+        // 初始化语言切换
+        InitializeLanguageChange();
 
         // 处理编辑请求
         _viewModel.RequestEdit += profile =>
@@ -34,6 +39,22 @@ public partial class MainWindow : Window
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+        UpdateTitle();
+    }
+
+    private void InitializeLanguageChange()
+    {
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(AppLanguage language)
+    {
+        UpdateTitle();
+    }
+
+    private void UpdateTitle()
+    {
+        Title = LanguageService.GetText("AppTitle");
     }
 
     private async void OpenDialog(EditDialogViewModel viewModel)

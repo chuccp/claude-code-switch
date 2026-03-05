@@ -1,5 +1,6 @@
 debug_mode = false
 theme = "Light"
+language = "en"
 [window]
 width = 800
 height = 600

@@ -31,7 +31,7 @@
                           FontWeight="SemiBold"
                           VerticalAlignment="Center"
                           Foreground="{DynamicResource TextPrimaryBrush}"/>
-                
+
                 <!-- 关闭按钮 -->
                 <Button x:Name="CloseButton"
                         Width="40" Height="32"
@@ -51,19 +51,19 @@
             <!-- 左侧：表单编辑 -->
             <ScrollViewer Grid.Column="0">
                 <StackPanel Spacing="16" Margin="0,0,12,0">
-                    <TextBlock Text="表单编辑" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="SemiBold"/>
-                    
+                    <TextBlock x:Name="FormEditLabel" Text="表单编辑" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="SemiBold"/>
+
                     <!-- 配置名称 -->
                     <StackPanel Spacing="6">
-                        <TextBlock Text="配置名称" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="13"/>
-                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBlock x:Name="ConfigNameLabel" Text="配置名称" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="13"/>
+                        <TextBox x:Name="NameTextBox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
                                 Watermark="请输入配置名称"/>
                     </StackPanel>
 
                     <!-- API 配置 -->
                     <StackPanel Spacing="6">
-                        <TextBlock Text="API 配置" Foreground="{DynamicResource AccentBrush}" FontSize="14" FontWeight="SemiBold"/>
-                        
+                        <TextBlock x:Name="ApiConfigLabel" Text="API 配置" Foreground="{DynamicResource AccentBrush}" FontSize="14" FontWeight="SemiBold"/>
+
                         <StackPanel Spacing="6">
                             <TextBlock Text="ANTHROPIC_AUTH_TOKEN" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="12"/>
                             <TextBox Text="{Binding AuthToken, UpdateSourceTrigger=PropertyChanged}"
@@ -88,10 +88,11 @@
             <!-- 右侧：JSON 编辑 -->
             <ScrollViewer Grid.Column="1">
                 <StackPanel Spacing="8" Margin="12,0,0,0">
-                    <TextBlock Text="JSON 配置" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="JsonConfigLabel" Text="JSON 配置" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="14" FontWeight="SemiBold"/>
                     <TextBox Text="{Binding JsonText, UpdateSourceTrigger=PropertyChanged}"
                             AcceptsReturn="True"
                             TextWrapping="Wrap"
+                            x:Name="JsonWatermark"
                             Watermark="在此输入 JSON 配置，修改将自动同步到左侧表单..."
                             FontFamily="Consolas,Courier New,monospace"
                             FontSize="12"

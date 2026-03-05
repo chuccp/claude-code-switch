@@ -18,6 +18,11 @@ public class AppConfig
     public string Theme { get; set; } = "Dark";
 
     /// <summary>
+    /// 语言：English, zh-CN, zh-TW
+    /// </summary>
+    public string Language { get; set; } = "en";
+
+    /// <summary>
     /// 窗口设置
     /// </summary>
     public WindowConfig Window { get; set; } = new();

@@ -8,6 +8,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.VisualTree;
 using ConsoleApp1.Models;
+using ConsoleApp1.Services;
 using ConsoleApp1.ViewModels;
 
 namespace ConsoleApp1.Views;
@@ -21,11 +22,99 @@ public partial class MainView : UserControl
     public MainView()
     {
         InitializeComponent();
+        InitializeLanguageChange();
     }
 
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+        UpdateStatusBarTexts();
+        UpdateLanguageTexts();
+    }
+
+    private void InitializeLanguageChange()
+    {
+        // 订阅语言变更事件
+        LanguageService.OnLanguageChanged += OnLanguageChanged;
+    }
+
+    private void OnLanguageChanged(AppLanguage language)
+    {
+        // 语言变更时刷新菜单（如果已打开）
+        if (_currentMenu != null)
+        {
+            _currentMenu.Close();
+            _currentMenu = null;
+        }
+        
+        // 更新状态栏文本
+        UpdateStatusBarTexts();
+        
+        // 更新语言相关文本
+        UpdateLanguageTexts();
+    }
+
+    private void UpdateLanguageTexts()
+    {
+        // 更新标题栏文本
+        if (this.FindControl<TextBlock>("TitleTextBlock2") is TextBlock titleTextBlock2)
+        {
+            titleTextBlock2.Text = LanguageService.GetText("AppTitle");
+        }
+        
+        // 更新按钮文本
+        if (this.FindControl<Button>("AddButton") is Button addButton)
+        {
+            addButton.Content = LanguageService.GetText("Add");
+        }
+        
+        if (this.FindControl<Button>("RefreshButton") is Button refreshButton)
+        {
+            refreshButton.Content = LanguageService.GetText("Refresh");
+        }
+    }
+
+    private void UpdateStatusBarTexts()
+    {
+        var viewModel = DataContext as MainViewModel;
+        
+        if (this.FindControl<TextBlock>("SelectedProfileTextBlock") is TextBlock selectedTextBlock && viewModel != null)
+        {
+            selectedTextBlock.Text = string.Format(
+                LanguageService.GetText("SelectedProfile"),
+                viewModel.Profiles.FirstOrDefault(p => p.IsSelected)?.Name ?? LanguageService.GetText("None")
+            );
+        }
+        
+        if (this.FindControl<TextBlock>("ProfilesCountTextBlock") is TextBlock countTextBlock && viewModel != null)
+        {
+            countTextBlock.Text = string.Format(
+                LanguageService.GetText("ProfilesCount"),
+                viewModel.Profiles.Count
+            );
+        }
+        
+        if (this.FindControl<TextBlock>("DebugModeTextBlock") is TextBlock debugTextBlock)
+        {
+            debugTextBlock.Text = LanguageService.GetText("DebugMode");
+        }
+        
+        // 更新标题栏文本
+        if (this.FindControl<TextBlock>("TitleTextBlock2") is TextBlock titleTextBlock2)
+        {
+            titleTextBlock2.Text = LanguageService.GetText("AppTitle");
+        }
+        
+        // 更新按钮文本
+        if (this.FindControl<Button>("AddButton") is Button addButton)
+        {
+            addButton.Content = LanguageService.GetText("Add");
+        }
+        
+        if (this.FindControl<Button>("RefreshButton") is Button refreshButton)
+        {
+            refreshButton.Content = LanguageService.GetText("Refresh");
+        }
     }
 
     private Window? GetWindow() => this.FindAncestorOfType<Window>();
@@ -136,7 +225,7 @@ public partial class MainView : UserControl
         {
             items.Add(new MenuItem
             {
-                Header = "应用",
+                Header = LanguageService.GetText("Apply"),
                 Command = viewModel.ApplyCommand,
                 CommandParameter = profile
             });
@@ -147,7 +236,7 @@ public partial class MainView : UserControl
         {
             items.Add(new MenuItem
             {
-                Header = "编辑",
+                Header = LanguageService.GetText("Edit"),
                 Command = viewModel.EditCommand,
                 CommandParameter = profile
             });
@@ -156,7 +245,7 @@ public partial class MainView : UserControl
         // 复制
         items.Add(new MenuItem
         {
-            Header = "复制",
+            Header = LanguageService.GetText("Copy"),
             Command = viewModel.CopyCommand,
             CommandParameter = profile
         });
@@ -169,7 +258,7 @@ public partial class MainView : UserControl
             // 删除
             items.Add(new MenuItem
             {
-                Header = "删除",
+                Header = LanguageService.GetText("Delete"),
                 Command = viewModel.DeleteCommand,
                 CommandParameter = profile
             });

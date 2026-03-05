@@ -19,9 +19,11 @@ public class MainViewModel : ReactiveObject
     private readonly AppConfig _appConfig;
     private string _selectedProfileName = "无";
     private string _currentTheme = "Dark";
+    private string _currentLanguage = "en";
 
     public ObservableCollection<ConfigProfile> Profiles { get; } = new();
     public List<string> Themes { get; } = new() { "Dark", "Light" };
+    public List<string> Languages { get; } = new() { "English", "简体中文", "繁體中文" };
 
     public ReactiveCommand<Unit, Unit> AddCommand { get; }
     public ReactiveCommand<Unit, Unit> RefreshCommand { get; }
@@ -29,9 +31,11 @@ public class MainViewModel : ReactiveObject
     public ReactiveCommand<ConfigProfile, Unit> EditCommand { get; }
     public ReactiveCommand<ConfigProfile, Unit> CopyCommand { get; }
     public ReactiveCommand<ConfigProfile, Unit> DeleteCommand { get; }
+    public ReactiveCommand<string, Unit> ChangeLanguageCommand { get; }
 
     public event Action<ConfigProfile>? RequestEdit;
     public event Action? RequestAdd;
+    public event Action<string>? RequestLanguageChange;
 
     public string CurrentTheme
     {
@@ -49,10 +53,42 @@ public class MainViewModel : ReactiveObject
         }
     }
 
+    public string CurrentLanguage
+    {
+        get => _currentLanguage;
+        set
+        {
+            if (_currentLanguage != value)
+            {
+                this.RaiseAndSetIfChanged(ref _currentLanguage, value);
+                var languageCode = GetLanguageCodeFromDisplayName(value);
+                _appConfig.Language = languageCode;
+                LanguageService.CurrentLanguage = LanguageConfig.Parse(languageCode);
+                ConfigManager.SaveConfig(_appConfig);
+                RequestLanguageChange?.Invoke(languageCode);
+            }
+        }
+    }
+
+    private string GetLanguageCodeFromDisplayName(string displayName)
+    {
+        return displayName switch
+        {
+            "简体中文" => "zh-CN",
+            "繁體中文" => "zh-TW",
+            _ => "en"
+        };
+    }
+
     public MainViewModel()
     {
         _appConfig = ConfigManager.LoadConfig();
         _currentTheme = _appConfig.Theme;
+        _currentLanguage = GetLanguageDisplayName(_appConfig.Language);
+
+        // 初始化语言服务
+        LanguageService.Initialize();
+        LanguageService.CurrentLanguage = LanguageConfig.Parse(_appConfig.Language);
 
         // 使用 Scheduler 的方式确保在主线程上执行
         AddCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -85,10 +121,25 @@ public class MainViewModel : ReactiveObject
             await Dispatcher.UIThread.InvokeAsync(() => DeleteProfile(profile));
         });
 
+        ChangeLanguageCommand = ReactiveCommand.Create<string>(language =>
+        {
+            CurrentLanguage = language;
+        });
+
         LoadProfiles();
 
         // 应用保存的主题
         App.SetTheme(_currentTheme);
+    }
+
+    private string GetLanguageDisplayName(string languageCode)
+    {
+        return languageCode.ToLower() switch
+        {
+            "zh-cn" => "简体中文",
+            "zh-tw" => "繁體中文",
+            _ => "English"
+        };
     }
 
     public bool DebugMode => _appConfig.DebugMode;
@@ -143,16 +194,16 @@ public class MainViewModel : ReactiveObject
         if (profile.IsReadonly) return;
 
         // 显示确认对话框
-        var confirmMessage = $"确定要应用此配置吗？\n\n" +
-            $"名称：{profile.Name}\n" +
-            $"Model: {profile.Env.AnthropicModel}\n" +
-            $"URL: {profile.Env.AnthropicBaseUrl}\n" +
-            $"Token: {MaskToken(profile.Env.AnthropicAuthToken)}";
+        var confirmMessage = $"{LanguageService.GetText("ConfirmApply")}\n\n" +
+            $"{LanguageService.GetText("Name")}: {profile.Name}\n" +
+            $"{LanguageService.GetText("Model")} {profile.Env.AnthropicModel}\n" +
+            $"{LanguageService.GetText("URL")} {profile.Env.AnthropicBaseUrl}\n" +
+            $"{LanguageService.GetText("Token")}: {MaskToken(profile.Env.AnthropicAuthToken)}";
 
         var mainWindow = GetMainWindow();
         if (mainWindow != null)
         {
-            var result = await MessageBox.Show(mainWindow, confirmMessage, "确认应用配置",
+            var result = await MessageBox.Show(mainWindow, confirmMessage, LanguageService.GetText("ConfirmApplyTitle"),
                 MessageBoxButton.YesNo, MessageBoxIcon.Question);
 
             if (result != MessageBoxResult.Yes)
