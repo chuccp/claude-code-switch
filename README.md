@@ -1,64 +1,66 @@
 # Claude Code Switch
 
-一个基于 Avalonia UI 的跨平台桌面应用程序。
+[🇨🇳 简体中文](README.zh-CN.md) | [🇨🇳 繁體中文](README.zh-TW.md) | [🇬🇧 English](README.md)
 
-## 下载
+A cross-platform desktop application based on Avalonia UI.
 
-从 [GitHub Releases](https://github.com/chuccp/claude-code-switch/releases) 下载最新版本。
+## Download
 
-## 项目截图
+Download the latest version from [GitHub Releases](https://github.com/chuccp/claude-code-switch/releases).
 
-![应用截图](images/83ecfdf5-d907-4979-8c6d-def15320c4fc.png)
+## Screenshots
 
-## 技术栈
+![Application Screenshot](images/83ecfdf5-d907-4979-8c6d-def15320c4fc.png)
+
+## Tech Stack
 
 - **.NET 10.0**
-- **Avalonia UI 11.1.3** - 跨平台 UI 框架
-- **Avalonia ReactiveUI** - 响应式 UI 模式
-- **Tomlyn** - TOML 配置文件解析
+- **Avalonia UI 11.1.3** - Cross-platform UI framework
+- **Avalonia ReactiveUI** - Reactive UI pattern
+- **Tomlyn** - TOML configuration file parsing
 
-## 主要特性
+## Features
 
-- 🎨 **Fluent 设计主题** - 现代化的 UI 风格
-- 🌙 **深色/浅色主题切换** - 支持主题切换
-- 📱 **跨平台支持** - Windows、Linux、macOS
-- 🔧 **可配置窗口设置** - 支持自定义窗口大小和位置
+- 🎨 **Fluent Design Theme** - Modern UI style
+- 🌙 **Dark/Light Theme Switch** - Theme switching support
+- 📱 **Cross-platform Support** - Windows, Linux, macOS
+- 🔧 **Configurable Window Settings** - Customizable window size and position
 
-## 项目结构
+## Project Structure
 
 ```
 claude-code-switch/
-├── Controls/          # 自定义控件
-├── Converters/        # 数据转换器
-├── Models/            # 数据模型
-├── Services/          # 服务层
-├── Theme/             # 主题样式
-├── ViewModels/        # 视图模型
-├── Views/             # 视图页面
-└── Program.cs         # 应用程序入口
+├── Controls/          # Custom controls
+├── Converters/        # Data converters
+├── Models/            # Data models
+├── Services/          # Service layer
+├── Theme/             # Theme styles
+├── ViewModels/        # View models
+├── Views/             # View pages
+└── Program.cs         # Application entry point
 ```
 
-## 开发环境要求
+## Requirements
 
 - .NET 10.0 SDK
-- 支持 Avalonia UI 的 IDE（如 Visual Studio、Rider 或 VS Code）
+- IDE with Avalonia UI support (Visual Studio, Rider, or VS Code)
 
-## 构建与运行
+## Build & Run
 
 ```bash
-# 还原依赖
+# Restore dependencies
 dotnet restore
 
-# 构建项目
+# Build project
 dotnet build
 
-# 运行应用
+# Run application
 dotnet run --project claude-code-switch/claude-code-switch.csproj
 ```
 
-## 配置文件
+## Configuration
 
-应用程序使用 `appl.toml` 进行配置：
+The application uses `appl.toml` for configuration:
 
 ```toml
 debug_mode = false
@@ -73,6 +75,6 @@ width = 700
 height = 550
 ```
 
-## 许可证
+## License
 
-本项目采用 MIT 许可证。详见 [LICENSE](LICENSE) 文件。
+This project is licensed under the MIT License. See [LICENSE](LICENSE) file for details.
