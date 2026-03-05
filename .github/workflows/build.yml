@@ -65,13 +65,20 @@ jobs:
         with:
           path: ./artifacts
 
-      - name: 打包构建产物
-        shell: bash
+      - name: 打包 Windows 版本
+        shell: pwsh
         run: |
-          cd ./artifacts
-          zip -r claude-code-switch-win.zip claude-code-switch-win/*
-          zip -r claude-code-switch-linux.zip claude-code-switch-linux/*
-          zip -r claude-code-switch-osx.zip claude-code-switch-osx/*
+          Compress-Archive -Path ./artifacts/claude-code-switch-win/* -DestinationPath ./artifacts/claude-code-switch-win.zip -Force
+
+      - name: 打包 Linux 版本
+        shell: pwsh
+        run: |
+          Compress-Archive -Path ./artifacts/claude-code-switch-linux/* -DestinationPath ./artifacts/claude-code-switch-linux.zip -Force
+
+      - name: 打包 macOS 版本
+        shell: pwsh
+        run: |
+          Compress-Archive -Path ./artifacts/claude-code-switch-osx/* -DestinationPath ./artifacts/claude-code-switch-osx.zip -Force
 
       - name: 创建 GitHub Release
         uses: softprops/action-gh-release@v2
