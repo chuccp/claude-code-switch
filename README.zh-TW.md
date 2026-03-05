@@ -1,6 +1,6 @@
 # Claude Code Switch
 
-[🇨🇳 简体中文](README.zh-CN.md) | [🇨🇳 繁體中文](README.zh-TW.md) | [🇬🇧 English](README.md)
+[简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [English](README.md)
 
 一個基於 Avalonia UI 的跨平台桌面應用程式。
 
