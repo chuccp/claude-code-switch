@@ -1,0 +1,81 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            artifact_name: claude-code-switch-win
+            publish_command: win-x64
+          - os: ubuntu-latest
+            artifact_name: claude-code-switch-linux
+            publish_command: linux-x64
+          - os: macos-latest
+            artifact_name: claude-code-switch-osx
+            publish_command: osx-x64
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: 还原依赖
+        run: dotnet restore claude-code-switch/claude-code-switch.csproj
+
+      - name: 构建项目
+        run: dotnet build claude-code-switch/claude-code-switch.csproj -c Release --no-restore
+
+      - name: 发布应用 (${{ matrix.publish_command }})
+        run: |
+          dotnet publish claude-code-switch/claude-code-switch.csproj \
+            -c Release \
+            -r ${{ matrix.publish_command }} \
+            --self-contained true \
+            -p:PublishSingleFile=true \
+            -p:IncludeNativeLibrariesForSelfExtract=true \
+            -o ./publish
+
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ./publish/*
+
+  release:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: 下载构建产物
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: 打包构建产物
+        run: |
+          cd ./artifacts
+          Compress-Archive -Path claude-code-switch-win/* -DestinationPath claude-code-switch-win.zip
+          Compress-Archive -Path claude-code-switch-linux/* -DestinationPath claude-code-switch-linux.zip
+          Compress-Archive -Path claude-code-switch-osx/* -DestinationPath claude-code-switch-osx.zip
+
+      - name: 创建 GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ./artifacts/claude-code-switch-win.zip
+            ./artifacts/claude-code-switch-linux.zip
+            ./artifacts/claude-code-switch-osx.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
