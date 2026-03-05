@@ -32,12 +32,15 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: 还原依赖
+        shell: bash
         run: dotnet restore claude-code-switch/claude-code-switch.csproj
 
       - name: 构建项目
+        shell: bash
         run: dotnet build claude-code-switch/claude-code-switch.csproj -c Release --no-restore
 
       - name: 发布应用 (${{ matrix.publish_command }})
+        shell: bash
         run: |
           dotnet publish claude-code-switch/claude-code-switch.csproj \
             -c Release \
@@ -63,11 +66,12 @@ jobs:
           path: ./artifacts
 
       - name: 打包构建产物
+        shell: bash
         run: |
           cd ./artifacts
-          Compress-Archive -Path claude-code-switch-win/* -DestinationPath claude-code-switch-win.zip
-          Compress-Archive -Path claude-code-switch-linux/* -DestinationPath claude-code-switch-linux.zip
-          Compress-Archive -Path claude-code-switch-osx/* -DestinationPath claude-code-switch-osx.zip
+          zip -r claude-code-switch-win.zip claude-code-switch-win/*
+          zip -r claude-code-switch-linux.zip claude-code-switch-linux/*
+          zip -r claude-code-switch-osx.zip claude-code-switch-osx/*
 
       - name: 创建 GitHub Release
         uses: softprops/action-gh-release@v2
