@@ -2,6 +2,10 @@
 
 一个基于 Avalonia UI 的跨平台桌面应用程序。
 
+## 下载
+
+从 [GitHub Releases](https://github.com/chuccp/claude-code-switch/releases) 下载最新版本。
+
 ## 项目截图
 
 ![应用截图](images/83ecfdf5-d907-4979-8c6d-def15320c4fc.png)
