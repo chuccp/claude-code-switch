@@ -8,6 +8,10 @@
 
 从 [GitHub Releases](https://github.com/chuccp/claude-code-switch/releases) 下载最新版本。
 
+> **Mac 和 Linux 用户注意事项：**
+> - **Linux**：需要运行 `chmod +x claude-code-switch` 赋予可执行权限。
+> - **macOS**：需要运行 `chmod +x claude-code-switch` 赋予可执行权限。首次启动时，可能需要在 `系统偏好设置 > 隐私与安全性` 中点击"仍要打开"以允许应用运行。
+
 ## 项目截图
 
 ![应用截图](images/83ecfdf5-d907-4979-8c6d-def15320c4fc.png)

@@ -8,6 +8,10 @@ A cross-platform desktop application based on Avalonia UI.
 
 Download the latest version from [GitHub Releases](https://github.com/chuccp/claude-code-switch/releases).
 
+> **Note for Mac and Linux users:**
+> - **Linux**: Run `chmod +x claude-code-switch` to grant execute permission.
+> - **macOS**: Run `chmod +x claude-code-switch` to grant execute permission. On first launch, you may need to go to `System Preferences > Privacy & Security` and click "Open Anyway" to allow the app to run.
+
 ## Screenshots
 
 ![Application Screenshot](images/83ecfdf5-d907-4979-8c6d-def15320c4fc.png)
