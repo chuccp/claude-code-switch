@@ -1,5 +1,13 @@
 # Claude Code Switch
 
+[![GitHub release](https://img.shields.io/github/v/release/chuccp/claude-code-switch?include_prereleases)](https://github.com/chuccp/claude-code-switch/releases)
+[![GitHub downloads](https://img.shields.io/github/downloads/chuccp/claude-code-switch/total)](https://github.com/chuccp/claude-code-switch/releases)
+[![GitHub stars](https://img.shields.io/github/stars/chuccp/claude-code-switch)](https://github.com/chuccp/claude-code-switch/stargazers)
+[![License](https://img.shields.io/github/license/chuccp/claude-code-switch)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-blue)](https://github.com/chuccp/claude-code-switch/releases)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/)
+[![C#](https://img.shields.io/badge/C%23-13.0-239120)](https://docs.microsoft.com/en-us/dotnet/csharp/)
+
 [简体中文](README.zh-CN.md) | [繁體中文](README.zh-TW.md) | [English](README.md)
 
 A cross-platform desktop application based on Avalonia UI.
