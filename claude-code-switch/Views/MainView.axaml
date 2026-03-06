@@ -175,27 +175,37 @@
         <Border Grid.Row="2"
                Classes="statusbar"
                Padding="16,8">
-            <StackPanel Orientation="Horizontal" Spacing="16">
-                <TextBlock Text="*"
-                          Foreground="{DynamicResource SuccessBrush}"
-                          FontSize="10"/>
-                <TextBlock x:Name="SelectedProfileTextBlock"
-                          Text="{Binding SelectedProfileName, StringFormat='当前配置：{0}'}"
-                          FontSize="12"/>
-                <TextBlock Text="|"
-                          Foreground="{DynamicResource BorderBrush}"
-                          FontSize="10"/>
-                <TextBlock x:Name="ProfilesCountTextBlock"
-                          Text="{Binding Profiles.Count, StringFormat='{}{0} 个配置'}"
-                          Foreground="{DynamicResource TextSecondaryBrush}"
-                          FontSize="11"/>
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16">
+                    <TextBlock Text="*"
+                              Foreground="{DynamicResource SuccessBrush}"
+                              FontSize="10"/>
+                    <TextBlock x:Name="SelectedProfileTextBlock"
+                              Text="{Binding SelectedProfileName, StringFormat='当前配置：{0}'}"
+                              FontSize="12"/>
+                    <TextBlock Text="|"
+                              Foreground="{DynamicResource BorderBrush}"
+                              FontSize="10"/>
+                    <TextBlock x:Name="ProfilesCountTextBlock"
+                              Text="{Binding Profiles.Count, StringFormat='{}{0} 个配置'}"
+                              Foreground="{DynamicResource TextSecondaryBrush}"
+                              FontSize="11"/>
 
-                <TextBlock x:Name="DebugModeTextBlock"
-                          Text="调试模式"
-                          Foreground="{DynamicResource WarningBrush}"
-                          FontSize="11"
-                          IsVisible="{Binding DebugMode}"/>
-            </StackPanel>
+                    <TextBlock x:Name="DebugModeTextBlock"
+                              Text="调试模式"
+                              Foreground="{DynamicResource WarningBrush}"
+                              FontSize="11"
+                              IsVisible="{Binding DebugMode}"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                       x:Name="ClaudeTerminalButton"
+                       Content="⌘ 终端"
+                       Command="{Binding OpenClaudeTerminalCommand}"
+                       Padding="12,6"
+                       FontSize="12"
+                       Classes="accent"/>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

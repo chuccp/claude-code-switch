@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Reactive;
 using Avalonia;
 using Avalonia.Controls;
@@ -32,6 +33,7 @@ public class MainViewModel : ReactiveObject
     public ReactiveCommand<ConfigProfile, Unit> CopyCommand { get; }
     public ReactiveCommand<ConfigProfile, Unit> DeleteCommand { get; }
     public ReactiveCommand<string, Unit> ChangeLanguageCommand { get; }
+    public ReactiveCommand<Unit, Unit> OpenClaudeTerminalCommand { get; }
 
     public event Action<ConfigProfile>? RequestEdit;
     public event Action? RequestAdd;
@@ -124,6 +126,11 @@ public class MainViewModel : ReactiveObject
         ChangeLanguageCommand = ReactiveCommand.Create<string>(language =>
         {
             CurrentLanguage = language;
+        });
+
+        OpenClaudeTerminalCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            await OpenClaudeTerminal();
         });
 
         LoadProfiles();
@@ -291,5 +298,112 @@ public class MainViewModel : ReactiveObject
     private void UpdateSelectedName()
     {
         SelectedProfileName = Profiles.FirstOrDefault(p => p.IsSelected)?.Name ?? "无";
+    }
+
+    private async Task OpenClaudeTerminal()
+    {
+        try
+        {
+            var isWindows = OperatingSystem.IsWindows();
+            var isMacOs = OperatingSystem.IsMacOS();
+            var isLinux = OperatingSystem.IsLinux();
+
+            ProcessStartInfo processStartInfo;
+
+            if (isWindows)
+            {
+                processStartInfo = new ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = "/k claude",
+                    UseShellExecute = true,
+                    WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+                };
+            }
+            else if (isMacOs)
+            {
+                processStartInfo = new ProcessStartInfo
+                {
+                    FileName = "osascript",
+                    Arguments = "-e 'tell application \"Terminal\" to do script \"claude\"'",
+                    UseShellExecute = true,
+                    WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+                };
+            }
+            else if (isLinux)
+            {
+                // 尝试常见的 Linux 终端
+                var terminalEmulators = new[]
+                {
+                    ("gnome-terminal", "-- claude"),
+                    ("konsole", "-e claude"),
+                    ("xfce4-terminal", "-e claude"),
+                    ("xterm", "-e claude"),
+                    ("alacritty", "-e claude"),
+                    ("kitty", "-e claude")
+                };
+
+                foreach (var (terminal, args) in terminalEmulators)
+                {
+                    if (IsCommandAvailable(terminal))
+                    {
+                        processStartInfo = new ProcessStartInfo
+                        {
+                            FileName = terminal,
+                            Arguments = args,
+                            UseShellExecute = true,
+                            WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+                        };
+                        Process.Start(processStartInfo);
+                        return;
+                    }
+                }
+
+                // 如果都没有，尝试使用 xdg-open 或默认终端
+                processStartInfo = new ProcessStartInfo
+                {
+                    FileName = "xdg-terminal",
+                    Arguments = "claude",
+                    UseShellExecute = true,
+                    WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
+                };
+            }
+            else
+            {
+                throw new NotSupportedException("不支持的操作系统");
+            }
+
+            Process.Start(processStartInfo);
+        }
+        catch (Exception ex)
+        {
+            var mainWindow = GetMainWindow();
+            if (mainWindow != null)
+            {
+                await MessageBox.Show(mainWindow, $"无法打开终端：{ex.Message}", "错误", MessageBoxButton.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+
+    private static bool IsCommandAvailable(string command)
+    {
+        try
+        {
+            var processStartInfo = new ProcessStartInfo
+            {
+                FileName = "which",
+                Arguments = command,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false
+            };
+            using var process = Process.Start(processStartInfo);
+            process?.WaitForExit(1000);
+            return process?.ExitCode == 0;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
