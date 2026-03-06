@@ -53,6 +53,57 @@ jobs:
             -p:IncludeNativeLibrariesForSelfExtract=true \
             -o ./publish
 
+      - name: 创建 macOS .app bundle
+        if: matrix.os == 'macos-latest'
+        shell: bash
+        run: |
+          APP_NAME="Claude Code Switch"
+          APP_DIR="./publish/${APP_NAME}.app"
+
+          # 创建 .app 目录结构
+          mkdir -p "${APP_DIR}/Contents/MacOS"
+          mkdir -p "${APP_DIR}/Contents/Resources"
+
+          # 移动可执行文件
+          mv ./publish/claude-code-switch "${APP_DIR}/Contents/MacOS/"
+
+          # 创建 Info.plist
+          cat > "${APP_DIR}/Contents/Info.plist" << 'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>CFBundleDevelopmentRegion</key>
+              <string>en</string>
+              <key>CFBundleExecutable</key>
+              <string>claude-code-switch</string>
+              <key>CFBundleIconFile</key>
+              <string>AppIcon</string>
+              <key>CFBundleIdentifier</key>
+              <string>com.claude-code-switch.app</string>
+              <key>CFBundleInfoDictionaryVersion</key>
+              <string>6.0</string>
+              <key>CFBundleName</key>
+              <string>Claude Code Switch</string>
+              <key>CFBundlePackageType</key>
+              <string>APPL</string>
+              <key>CFBundleShortVersionString</key>
+              <string>1.0</string>
+              <key>CFBundleVersion</key>
+              <string>1</string>
+              <key>LSMinimumSystemVersion</key>
+              <string>10.15</string>
+              <key>NSHighResolutionCapable</key>
+              <true/>
+              <key>NSPrincipalClass</key>
+              <string>NSApplication</string>
+          </dict>
+          </plist>
+          EOF
+
+          # 删除其他多余文件
+          find ./publish -maxdepth 1 -type f ! -name "*.app" -delete 2>/dev/null || true
+
       - name: 上传构建产物
         uses: actions/upload-artifact@v4
         with:
