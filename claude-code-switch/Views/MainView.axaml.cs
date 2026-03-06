@@ -61,16 +61,22 @@ public partial class MainView : UserControl
         {
             titleTextBlock2.Text = LanguageService.GetText("AppTitle");
         }
-        
+
         // 更新按钮文本
         if (this.FindControl<Button>("AddButton") is Button addButton)
         {
             addButton.Content = LanguageService.GetText("Add");
         }
-        
+
         if (this.FindControl<Button>("RefreshButton") is Button refreshButton)
         {
             refreshButton.Content = LanguageService.GetText("Refresh");
+        }
+
+        // 更新终端按钮文本
+        if (this.FindControl<Button>("ClaudeTerminalButton") is Button terminalButton)
+        {
+            terminalButton.Content = "⌘ " + LanguageService.GetText("Terminal");
         }
     }
 

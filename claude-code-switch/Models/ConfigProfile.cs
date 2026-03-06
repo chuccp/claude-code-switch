@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using ReactiveUI;
+using ConsoleApp1.Services;
 
 namespace ConsoleApp1.Models;
 
@@ -8,6 +9,19 @@ namespace ConsoleApp1.Models;
 /// </summary>
 public class ConfigProfile : ReactiveObject
 {
+    public ConfigProfile()
+    {
+        // 订阅语言变更事件
+        LanguageService.OnLanguageChanged += _ => OnLanguageChanged();
+    }
+
+    private void OnLanguageChanged()
+    {
+        this.RaisePropertyChanged(nameof(CurrentText));
+        this.RaisePropertyChanged(nameof(SystemText));
+        this.RaisePropertyChanged(nameof(ReadOnlyText));
+    }
+
     public string Id { get; set; } = Guid.NewGuid().ToString();
 
     private string _name = string.Empty;
@@ -39,6 +53,24 @@ public class ConfigProfile : ReactiveObject
         get => _isReadonly;
         set => this.RaiseAndSetIfChanged(ref _isReadonly, value);
     }
+
+    /// <summary>
+    /// 本地化的"当前"文本
+    /// </summary>
+    [JsonIgnore]
+    public string CurrentText => LanguageService.GetText("Current");
+
+    /// <summary>
+    /// 本地化的"系统"文本
+    /// </summary>
+    [JsonIgnore]
+    public string SystemText => LanguageService.GetText("System");
+
+    /// <summary>
+    /// 本地化的"不可修改"文本
+    /// </summary>
+    [JsonIgnore]
+    public string ReadOnlyText => LanguageService.GetText("ReadOnly");
 }
 
 /// <summary>

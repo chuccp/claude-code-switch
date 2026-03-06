@@ -52,6 +52,7 @@ public static class LanguageService
             ["Refresh"] = "~ Refresh",
             ["Current"] = "Current",
             ["System"] = "System",
+            ["ReadOnly"] = "Read Only",
             ["Model"] = "Model:",
             ["URL"] = "URL:",
             ["SelectedProfile"] = "Selected Profile: {0}",
@@ -84,7 +85,8 @@ public static class LanguageService
             ["ApiConfigLabel"] = "API Configuration",
             ["JsonConfigLabel"] = "JSON Configuration",
             ["JsonConfigWatermark"] = "Enter JSON configuration here, changes will sync to the form...",
-            ["JsonError"] = "JSON Error"
+            ["JsonError"] = "JSON Error",
+            ["Terminal"] = "Terminal"
         };
 
         // 简体中文资源
@@ -95,6 +97,7 @@ public static class LanguageService
             ["Refresh"] = "~ 刷新",
             ["Current"] = "当前",
             ["System"] = "系统",
+            ["ReadOnly"] = "不可修改",
             ["Model"] = "Model:",
             ["URL"] = "URL:",
             ["SelectedProfile"] = "当前配置：{0}",
@@ -127,7 +130,8 @@ public static class LanguageService
             ["ApiConfigLabel"] = "API 配置",
             ["JsonConfigLabel"] = "JSON 配置",
             ["JsonConfigWatermark"] = "在此输入 JSON 配置，修改将自动同步到左侧表单...",
-            ["JsonError"] = "JSON 错误"
+            ["JsonError"] = "JSON 错误",
+            ["Terminal"] = "终端"
         };
 
         // 繁体中文资源
@@ -138,6 +142,7 @@ public static class LanguageService
             ["Refresh"] = "~ 重新整理",
             ["Current"] = "目前",
             ["System"] = "系統",
+            ["ReadOnly"] = "不可修改",
             ["Model"] = "Model:",
             ["URL"] = "URL:",
             ["SelectedProfile"] = "目前設定：{0}",
@@ -170,7 +175,8 @@ public static class LanguageService
             ["ApiConfigLabel"] = "API 設定",
             ["JsonConfigLabel"] = "JSON 設定",
             ["JsonConfigWatermark"] = "在此輸入 JSON 設定，修改將自動同步到左側表單...",
-            ["JsonError"] = "JSON 錯誤"
+            ["JsonError"] = "JSON 錯誤",
+            ["Terminal"] = "終端"
         };
     }
 
