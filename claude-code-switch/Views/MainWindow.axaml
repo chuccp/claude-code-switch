@@ -9,6 +9,8 @@
         CanResize="True"
         ShowInTaskbar="True"
         ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
         SystemDecorations="BorderOnly">
 
     <views:MainView/>
