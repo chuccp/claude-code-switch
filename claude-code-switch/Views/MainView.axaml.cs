@@ -46,10 +46,10 @@ public partial class MainView : UserControl
             _currentMenu.Close();
             _currentMenu = null;
         }
-        
+
         // 更新状态栏文本
         UpdateStatusBarTexts();
-        
+
         // 更新语言相关文本
         UpdateLanguageTexts();
     }
@@ -83,7 +83,7 @@ public partial class MainView : UserControl
     private void UpdateStatusBarTexts()
     {
         var viewModel = DataContext as MainViewModel;
-        
+
         if (this.FindControl<TextBlock>("SelectedProfileTextBlock") is TextBlock selectedTextBlock && viewModel != null)
         {
             selectedTextBlock.Text = string.Format(
@@ -91,7 +91,7 @@ public partial class MainView : UserControl
                 viewModel.Profiles.FirstOrDefault(p => p.IsSelected)?.Name ?? LanguageService.GetText("None")
             );
         }
-        
+
         if (this.FindControl<TextBlock>("ProfilesCountTextBlock") is TextBlock countTextBlock && viewModel != null)
         {
             countTextBlock.Text = string.Format(
@@ -99,30 +99,71 @@ public partial class MainView : UserControl
                 viewModel.Profiles.Count
             );
         }
-        
+
         if (this.FindControl<TextBlock>("DebugModeTextBlock") is TextBlock debugTextBlock)
         {
             debugTextBlock.Text = LanguageService.GetText("DebugMode");
         }
-        
+
         // 更新标题栏文本
         if (this.FindControl<TextBlock>("TitleTextBlock2") is TextBlock titleTextBlock2)
         {
             titleTextBlock2.Text = LanguageService.GetText("AppTitle");
         }
-        
+
         // 更新按钮文本
         if (this.FindControl<Button>("AddButton") is Button addButton)
         {
             addButton.Content = LanguageService.GetText("Add");
         }
-        
+
         if (this.FindControl<Button>("RefreshButton") is Button refreshButton)
         {
             refreshButton.Content = LanguageService.GetText("Refresh");
         }
     }
 
+    private Window? GetWindow() => this.FindAncestorOfType<Window>();
+
+    private void OnMinimizeClick(object? sender, RoutedEventArgs e)
+    {
+        var window = GetWindow();
+        if (window == null) return;
+        window.WindowState = WindowState.Minimized;
+    }
+
+    private void OnMaximizeClick(object? sender, RoutedEventArgs e)
+    {
+        var window = GetWindow();
+        if (window == null) return;
+
+        window.WindowState = window.WindowState == WindowState.Maximized
+            ? WindowState.Normal
+            : WindowState.Maximized;
+    }
+
+    private void OnCloseClick(object? sender, RoutedEventArgs e)
+    {
+        GetWindow()?.Close();
+    }
+
+    private void OnTitleBarPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        // 如果点击的是 ComboBox 或其子元素，不处理拖动
+        var source = e.Source as Visual;
+        while (source != null)
+        {
+            if (source is ComboBox)
+                return;
+            source = source.GetVisualParent() as Visual;
+        }
+
+        var window = GetWindow();
+        if (window == null) return;
+
+        // 开始拖动窗口
+        window.BeginMoveDrag(e);
+    }
 
     private void OnItemsControlSizeChanged(object? sender, SizeChangedEventArgs e)
     {
@@ -136,7 +177,6 @@ public partial class MainView : UserControl
         var availableWidth = e.NewSize.Width;
 
         // 计算可以放多少列
-        // 每个槽位最小宽度 = MinCardWidth + gap
         // columns = floor(availableWidth / (MinCardWidth + gap))
         int columns = Math.Max(1, (int)(availableWidth / (MinCardWidth + CardGap)));
 

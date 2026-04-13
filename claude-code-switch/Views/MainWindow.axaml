@@ -8,8 +8,8 @@
         WindowStartupLocation="CenterScreen"
         CanResize="True"
         ShowInTaskbar="True"
-        ExtendClientAreaToDecorationsHint="False"
-        SystemDecorations="Full">
+        ExtendClientAreaToDecorationsHint="True"
+        SystemDecorations="BorderOnly">
 
     <views:MainView/>
 </Window>

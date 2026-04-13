@@ -5,10 +5,88 @@
              x:Class="ConsoleApp1.Views.MainView"
              x:DataType="vm:MainViewModel">
 
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- 工具栏/标题栏 -->
+        <Border Grid.Row="0"
+                Classes="titlebar"
+                Padding="16,8"
+                x:Name="TitleBar"
+                PointerPressed="OnTitleBarPointerPressed">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <!-- 左侧：标题和按钮 -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <TextBlock x:Name="TitleTextBlock1" Text="Claude Code"
+                              FontWeight="Bold"
+                              FontSize="14"
+                              VerticalAlignment="Center"/>
+
+                    <TextBlock x:Name="TitleTextBlock2" Text="配置切换器"
+                              FontSize="12"
+                              VerticalAlignment="Center"
+                              Foreground="{DynamicResource TextSecondaryBrush}"/>
+
+                    <Button x:Name="AddButton" Content="+ 新增"
+                           Command="{Binding AddCommand}"
+                           Classes="accent"
+                           CornerRadius="6"
+                           Padding="12,6"
+                           FontSize="12"/>
+
+                    <Button x:Name="RefreshButton" Content="~ 刷新"
+                           Command="{Binding RefreshCommand}"
+                           CornerRadius="6"
+                           Padding="12,6"
+                           FontSize="12"/>
+
+                    <ComboBox x:Name="LanguageComboBox"
+                             ItemsSource="{Binding Languages}"
+                             SelectedItem="{Binding CurrentLanguage, Mode=TwoWay}"
+                             Padding="12,4"
+                             FontSize="12"
+                             MinWidth="100"
+                             VerticalAlignment="Center"/>
+
+                    <ComboBox x:Name="ThemeComboBox"
+                             ItemsSource="{Binding Themes}"
+                             SelectedItem="{Binding CurrentTheme, Mode=TwoWay}"
+                             Padding="12,4"
+                             FontSize="12"
+                             MinWidth="100"
+                             VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- 右侧：窗口控制按钮 -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="0" VerticalAlignment="Center">
+                    <Button x:Name="MinimizeButton"
+                            Width="40" Height="32"
+                            Background="Transparent"
+                            CornerRadius="0"
+                            Click="OnMinimizeClick"
+                            BorderThickness="0">
+                        <TextBlock Text="─" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}" FontWeight="Bold"/>
+                    </Button>
+                    <Button x:Name="MaximizeButton"
+                            Width="40" Height="32"
+                            Background="Transparent"
+                            CornerRadius="0"
+                            Click="OnMaximizeClick"
+                            BorderThickness="0">
+                        <TextBlock Text="□" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                    </Button>
+                    <Button x:Name="CloseButton"
+                            Width="40" Height="32"
+                            Background="Transparent"
+                            CornerRadius="0"
+                            Click="OnCloseClick"
+                            BorderThickness="0">
+                        <TextBlock Text="✕" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
         <!-- 主面板 - 响应式卡片网格 -->
-        <ScrollViewer Grid.Row="0"
-                     Margin="0,8,0,0"
+        <ScrollViewer Grid.Row="1"
                      VerticalScrollBarVisibility="Auto"
                      AllowAutoHide="False">
             <Border Padding="16,16,4,16">
@@ -109,56 +187,12 @@
         </ScrollViewer>
 
         <!-- 状态栏 -->
-        <Border Grid.Row="1"
+        <Border Grid.Row="2"
                Classes="statusbar"
                Padding="16,8">
-            <Grid ColumnDefinitions="Auto,*,Auto">
-                <!-- 左侧工具栏按钮 -->
-                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
-                    <TextBlock x:Name="TitleTextBlock1" Text="Claude Code"
-                              FontWeight="Bold"
-                              FontSize="14"
-                              VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name="TitleTextBlock2" Text="配置切换器"
-                              FontSize="12"
-                              VerticalAlignment="Center"
-                              Foreground="{DynamicResource TextSecondaryBrush}"/>
-
-                    <TextBlock Text="|" Foreground="{DynamicResource BorderBrush}"/>
-
-                    <Button x:Name="AddButton" Content="+ 新增"
-                           Command="{Binding AddCommand}"
-                           Classes="accent"
-                           CornerRadius="6"
-                           Padding="12,6"
-                           FontSize="12"/>
-
-                    <Button x:Name="RefreshButton" Content="~ 刷新"
-                           Command="{Binding RefreshCommand}"
-                           CornerRadius="6"
-                           Padding="12,6"
-                           FontSize="12"/>
-
-                    <ComboBox x:Name="LanguageComboBox"
-                             ItemsSource="{Binding Languages}"
-                             SelectedItem="{Binding CurrentLanguage, Mode=TwoWay}"
-                             Padding="12,4"
-                             FontSize="12"
-                             MinWidth="100"
-                             VerticalAlignment="Center"/>
-
-                    <ComboBox x:Name="ThemeComboBox"
-                             ItemsSource="{Binding Themes}"
-                             SelectedItem="{Binding CurrentTheme, Mode=TwoWay}"
-                             Padding="12,4"
-                             FontSize="12"
-                             MinWidth="100"
-                             VerticalAlignment="Center"/>
-                </StackPanel>
-
-                <!-- 中间状态信息 -->
-                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+            <Grid ColumnDefinitions="*,Auto">
+                <!-- 左侧状态信息 -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                     <TextBlock Text="*"
                               Foreground="{DynamicResource SuccessBrush}"
                               FontSize="10"
@@ -186,7 +220,7 @@
                 </StackPanel>
 
                 <!-- 右侧终端按钮 -->
-                <StackPanel Grid.Column="2" >
+                <StackPanel Grid.Column="1" >
                     <Button x:Name="ClaudeTerminalButton"
                            Content="⌘ 终端"
                            Command="{Binding OpenClaudeTerminalCommand}"
