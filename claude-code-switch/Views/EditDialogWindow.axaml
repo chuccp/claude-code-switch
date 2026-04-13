@@ -8,46 +8,15 @@
         Width="900" Height="700"
         MinWidth="700" MinHeight="550"
         WindowStartupLocation="CenterOwner"
-        CanResize="True"
-        ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="NoChrome"
-        ExtendClientAreaTitleBarHeightHint="-1"
-        SystemDecorations="None">
+        CanResize="True">
 
     <Window.Resources>
         <converters:StringIsNotNullOrEmptyConverter x:Key="StringIsNotNullOrEmpty"/>
     </Window.Resources>
 
-    <Grid RowDefinitions="Auto,*,Auto">
-        <!-- 自定义标题栏 -->
-        <Border Grid.Row="0"
-                Classes="titlebar"
-                Padding="16,8"
-                x:Name="TitleBar"
-                PointerPressed="OnTitleBarPointerPressed">
-            <Grid>
-                <TextBlock Text="{Binding Title}"
-                          FontSize="14"
-                          FontWeight="SemiBold"
-                          VerticalAlignment="Center"
-                          Foreground="{DynamicResource TextPrimaryBrush}"/>
-
-                <!-- 关闭按钮 -->
-                <Button x:Name="CloseButton"
-                        Width="40" Height="32"
-                       HorizontalAlignment="Right"
-                       Background="Transparent"
-                       CornerRadius="0"
-                       Margin="0,0,0,0"
-                       Click="OnCloseClick"
-                       BorderThickness="0">
-                    <TextBlock Text="✕" Padding="0" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                </Button>
-            </Grid>
-        </Border>
-
+    <Grid RowDefinitions="*,Auto">
         <!-- 内容区域：左右分栏 -->
-        <Grid Grid.Row="1" ColumnDefinitions="*,*" Margin="24,0,24,16">
+        <Grid Grid.Row="0" ColumnDefinitions="*,*" Margin="24,16,24,8">
             <!-- 左侧：表单编辑 -->
             <ScrollViewer Grid.Column="0">
                 <StackPanel Spacing="16" Margin="0,0,12,0">
@@ -112,7 +81,7 @@
         </Grid>
 
         <!-- 按钮 -->
-        <Border Grid.Row="2"
+        <Border Grid.Row="1"
                Classes="statusbar"
                Padding="16,12">
             <StackPanel Orientation="Horizontal"

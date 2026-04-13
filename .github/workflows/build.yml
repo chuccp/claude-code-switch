@@ -14,16 +14,20 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
+        runtime: []
         include:
           - os: windows-latest
             artifact_name: claude-code-switch-win
-            publish_command: win-x64
+            runtime: win-x64
           - os: ubuntu-latest
             artifact_name: claude-code-switch-linux
-            publish_command: linux-x64
+            runtime: linux-x64
           - os: macos-latest
-            artifact_name: claude-code-switch-osx
-            publish_command: osx-x64
+            artifact_name: claude-code-switch-osx-x64
+            runtime: osx-x64
+          - os: macos-latest
+            artifact_name: claude-code-switch-osx-arm64
+            runtime: osx-arm64
 
     steps:
       - name: 检出代码
@@ -42,22 +46,23 @@ jobs:
         shell: bash
         run: dotnet build claude-code-switch/claude-code-switch.csproj -c Release --no-restore
 
-      - name: 发布应用 (${{ matrix.publish_command }})
+      - name: 发布应用 (${{ matrix.runtime }})
         shell: bash
         run: |
           dotnet publish claude-code-switch/claude-code-switch.csproj \
             -c Release \
-            -r ${{ matrix.publish_command }} \
+            -r ${{ matrix.runtime }} \
             --self-contained true \
             -p:PublishSingleFile=true \
             -p:IncludeNativeLibrariesForSelfExtract=true \
             -o ./publish
 
       - name: 创建 macOS .app bundle
-        if: matrix.os == 'macos-latest'
+        if: startsWith(matrix.runtime, 'osx-')
         shell: bash
         run: |
           APP_NAME="Claude Code Switch"
+          ARCH_NAME="${{ matrix.runtime }}"
           APP_DIR="./publish/${APP_NAME}.app"
 
           # 创建 .app 目录结构
@@ -102,7 +107,7 @@ jobs:
           EOF
 
           # 删除其他多余文件
-          find ./publish -maxdepth 1 -type f ! -name "*.app" -delete 2>/dev/null || true
+          find ./publish -maxdepth 1 -type f -delete 2>/dev/null || true
 
       - name: 上传构建产物
         uses: actions/upload-artifact@v4
@@ -112,7 +117,7 @@ jobs:
 
   release:
     needs: build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: 下载构建产物
         uses: actions/download-artifact@v4
@@ -120,19 +125,24 @@ jobs:
           path: ./artifacts
 
       - name: 打包 Windows 版本
-        shell: pwsh
         run: |
-          Compress-Archive -Path ./artifacts/claude-code-switch-win/* -DestinationPath ./artifacts/claude-code-switch-win.zip -Force
+          cd ./artifacts/claude-code-switch-win
+          zip -9 ../claude-code-switch-win.zip -r ./*
 
       - name: 打包 Linux 版本
-        shell: pwsh
         run: |
-          Compress-Archive -Path ./artifacts/claude-code-switch-linux/* -DestinationPath ./artifacts/claude-code-switch-linux.zip -Force
+          cd ./artifacts/claude-code-switch-linux
+          zip -9 ../claude-code-switch-linux.zip -r ./*
 
-      - name: 打包 macOS 版本
-        shell: pwsh
+      - name: 打包 macOS x64 版本
         run: |
-          Compress-Archive -Path ./artifacts/claude-code-switch-osx/* -DestinationPath ./artifacts/claude-code-switch-osx.zip -Force
+          cd ./artifacts/claude-code-switch-osx-x64
+          zip -9 ../claude-code-switch-osx-x64.zip -r "Claude Code Switch.app"
+
+      - name: 打包 macOS arm64 版本
+        run: |
+          cd ./artifacts/claude-code-switch-osx-arm64
+          zip -9 ../claude-code-switch-osx-arm64.zip -r "Claude Code Switch.app"
 
       - name: 创建 GitHub Release
         uses: softprops/action-gh-release@v2
@@ -140,7 +150,8 @@ jobs:
           files: |
             ./artifacts/claude-code-switch-win.zip
             ./artifacts/claude-code-switch-linux.zip
-            ./artifacts/claude-code-switch-osx.zip
+            ./artifacts/claude-code-switch-osx-x64.zip
+            ./artifacts/claude-code-switch-osx-arm64.zip
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
