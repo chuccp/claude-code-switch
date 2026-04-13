@@ -54,7 +54,7 @@ public partial class MainWindow : Window
 
     private void UpdateTitle()
     {
-        Title = LanguageService.GetText("AppTitle");
+        Title = "claude-code-switch";
     }
 
     private async void OpenDialog(EditDialogViewModel viewModel)
