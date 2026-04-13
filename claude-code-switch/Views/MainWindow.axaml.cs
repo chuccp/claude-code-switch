@@ -16,7 +16,13 @@ public partial class MainWindow : Window
         InitializeComponent();
         _viewModel = new MainViewModel();
         DataContext = _viewModel;
-        
+
+        // 确保显示系统完整标题栏（包含最小化按钮）
+        ExtendClientAreaToDecorationsHint = false;
+        SystemDecorations = SystemDecorations.Full;
+        // 允许最小化窗口
+        CanResize = true;
+
         // 初始化语言切换
         InitializeLanguageChange();
 
