@@ -153,26 +153,30 @@ jobs:
         run: |
           ls -la ./artifacts/
           ls -la ./artifacts/claude-code-switch-osx-x64/
+          find ./artifacts -name "*.app"
 
       - name: 打包 Windows 版本
         run: |
           cd ./artifacts/claude-code-switch-win
-          zip -9 ../claude-code-switch-win.zip -r ./*
+          zip -9 -y ../claude-code-switch-win.zip -r ./*
 
       - name: 打包 Linux 版本
         run: |
           cd ./artifacts/claude-code-switch-linux
-          zip -9 ../claude-code-switch-linux.zip -r ./*
+          zip -9 -y ../claude-code-switch-linux.zip -r ./*
 
       - name: 打包 macOS x64 版本
         run: |
+          pwd
+          ls -la ./artifacts/claude-code-switch-osx-x64/
+          find ./artifacts/claude-code-switch-osx-x64 -name "*.app"
           cd ./artifacts/claude-code-switch-osx-x64
-          zip -9 ../claude-code-switch-osx-x64.zip -r "Claude Code Switch.app"
+          zip -9 -y ../claude-code-switch-osx-x64.zip -r "Claude Code Switch.app"
 
       - name: 打包 macOS arm64 版本
         run: |
           cd ./artifacts/claude-code-switch-osx-arm64
-          zip -9 ../claude-code-switch-osx-arm64.zip -r "Claude Code Switch.app"
+          zip -9 -y ../claude-code-switch-osx-arm64.zip -y -r "Claude Code Switch.app"
 
       - name: 创建 GitHub Release
         uses: softprops/action-gh-release@v2
