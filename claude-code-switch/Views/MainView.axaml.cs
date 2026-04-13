@@ -125,26 +125,6 @@ public partial class MainView : UserControl
 
     private Window? GetWindow() => this.FindAncestorOfType<Window>();
 
-    private void OnMinimizeClick(object? sender, RoutedEventArgs e)
-    {
-        GetWindow()?.WindowState = WindowState.Minimized;
-    }
-
-    private void OnMaximizeClick(object? sender, RoutedEventArgs e)
-    {
-        var window = GetWindow();
-        if (window == null) return;
-
-        window.WindowState = window.WindowState == WindowState.Maximized
-            ? WindowState.Normal
-            : WindowState.Maximized;
-    }
-
-    private void OnCloseClick(object? sender, RoutedEventArgs e)
-    {
-        GetWindow()?.Close();
-    }
-
     private void OnTitleBarPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         // 如果点击的是 ComboBox 或其子元素，不处理拖动

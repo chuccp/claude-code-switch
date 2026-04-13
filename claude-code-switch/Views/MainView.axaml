@@ -12,7 +12,7 @@
                 Padding="16,8"
                 x:Name="TitleBar"
                 PointerPressed="OnTitleBarPointerPressed">
-            <Grid ColumnDefinitions="Auto,*,Auto">
+            <Grid ColumnDefinitions="*,Auto">
                 <!-- 左侧：标题和按钮 -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
                     <TextBlock x:Name="TitleTextBlock1" Text="Claude Code"
@@ -53,34 +53,6 @@
                              FontSize="12"
                              MinWidth="100"
                              VerticalAlignment="Center"/>
-                </StackPanel>
-
-                <!-- 右侧：窗口控制按钮 -->
-                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="0" VerticalAlignment="Center">
-                    <Button x:Name="MinimizeButton"
-                            Width="40" Height="32"
-                            Background="Transparent"
-                            CornerRadius="0"
-                            Click="OnMinimizeClick"
-                            BorderThickness="0">
-                        <TextBlock Text="─" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}" FontWeight="Bold"/>
-                    </Button>
-                    <Button x:Name="MaximizeButton"
-                            Width="40" Height="32"
-                            Background="Transparent"
-                            CornerRadius="0"
-                            Click="OnMaximizeClick"
-                            BorderThickness="0">
-                        <TextBlock Text="□" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                    </Button>
-                    <Button x:Name="CloseButton"
-                            Width="40" Height="32"
-                            Background="Transparent"
-                            CornerRadius="0"
-                            Click="OnCloseClick"
-                            BorderThickness="0">
-                        <TextBlock Text="✕" FontSize="14" Foreground="{DynamicResource TextSecondaryBrush}"/>
-                    </Button>
                 </StackPanel>
             </Grid>
         </Border>
