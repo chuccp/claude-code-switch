@@ -88,7 +88,9 @@ jobs:
               <key>CFBundleInfoDictionaryVersion</key>
               <string>6.0</string>
               <key>CFBundleName</key>
-              <string>Claude Code Switch</string>
+              <string>claude-code-switch</string>
+              <key>CFBundleDisplayName</key>
+              <string>claude-code-switch</string>
               <key>CFBundlePackageType</key>
               <string>APPL</string>
               <key>CFBundleShortVersionString</key>
@@ -100,10 +102,15 @@ jobs:
               <key>NSHighResolutionCapable</key>
               <true/>
               <key>NSPrincipalClass</key>
-              <string>NSApplication</string>
+              <string>NSApplication</key>
+              <key>CSResourcesFileMapped</key>
+              <true/>
           </dict>
           </plist>
           EOF
+
+          # 删除 quarantine 属性，解决 Gatekeeper 阻止问题
+          xattr -cr "${APP_DIR}" 2>/dev/null || true
 
           # 删除其他多余文件
           find ./publish -maxdepth 1 -type f -delete 2>/dev/null || true
