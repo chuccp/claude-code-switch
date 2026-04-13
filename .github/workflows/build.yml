@@ -60,7 +60,7 @@ jobs:
         if: startsWith(matrix.runtime, 'osx-')
         shell: bash
         run: |
-          APP_NAME="Claude Code Switch"
+          APP_NAME="claude-code-switch"
           ARCH_NAME="${{ matrix.runtime }}"
           APP_DIR="./publish/${APP_NAME}.app"
 
@@ -171,12 +171,12 @@ jobs:
           ls -la ./artifacts/claude-code-switch-osx-x64/
           find ./artifacts/claude-code-switch-osx-x64 -name "*.app"
           cd ./artifacts/claude-code-switch-osx-x64
-          zip -9 -y ../claude-code-switch-osx-x64.zip -r "Claude Code Switch.app"
+          zip -9 -y ../claude-code-switch-osx-x64.zip -r claude-code-switch.app
 
       - name: 打包 macOS arm64 版本
         run: |
           cd ./artifacts/claude-code-switch-osx-arm64
-          zip -9 -y ../claude-code-switch-osx-arm64.zip -y -r "Claude Code Switch.app"
+          zip -9 -y ../claude-code-switch-osx-arm64.zip -r claude-code-switch.app
 
       - name: 创建 GitHub Release
         uses: softprops/action-gh-release@v2
