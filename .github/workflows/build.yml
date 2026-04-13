@@ -125,14 +125,34 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: 下载构建产物
+      - name: 下载 Windows 产物
         uses: actions/download-artifact@v4
         with:
-          path: ./artifacts
+          name: claude-code-switch-win
+          path: ./artifacts/claude-code-switch-win
 
-      - name: 列出下载的产物目录结构
+      - name: 下载 Linux 产物
+        uses: actions/download-artifact@v4
+        with:
+          name: claude-code-switch-linux
+          path: ./artifacts/claude-code-switch-linux
+
+      - name: 下载 macOS x64 产物
+        uses: actions/download-artifact@v4
+        with:
+          name: claude-code-switch-osx-x64
+          path: ./artifacts/claude-code-switch-osx-x64
+
+      - name: 下载 macOS arm64 产物
+        uses: actions/download-artifact@v4
+        with:
+          name: claude-code-switch-osx-arm64
+          path: ./artifacts/claude-code-switch-osx-arm64
+
+      - name: 列出目录结构
         run: |
           ls -la ./artifacts/
+          ls -la ./artifacts/claude-code-switch-osx-x64/
 
       - name: 打包 Windows 版本
         run: |
@@ -146,9 +166,7 @@ jobs:
 
       - name: 打包 macOS x64 版本
         run: |
-          ls -la ./artifacts/claude-code-switch-osx-x64/
           cd ./artifacts/claude-code-switch-osx-x64
-          ls -la
           zip -9 ../claude-code-switch-osx-x64.zip -r "Claude Code Switch.app"
 
       - name: 打包 macOS arm64 版本
