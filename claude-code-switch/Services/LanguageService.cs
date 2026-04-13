@@ -47,7 +47,7 @@ public static class LanguageService
         // 英文资源
         _resources["en"] = new Dictionary<string, string>
         {
-            ["AppTitle"] = "Config Switch",
+            ["AppTitle"] = "claude-code-switch",
             ["Add"] = "+ Add",
             ["Refresh"] = "~ Refresh",
             ["Current"] = "Current",
@@ -92,7 +92,7 @@ public static class LanguageService
         // 简体中文资源
         _resources["zh-CN"] = new Dictionary<string, string>
         {
-            ["AppTitle"] = "配置切换器",
+            ["AppTitle"] = "claude-code-switch",
             ["Add"] = "+ 新增",
             ["Refresh"] = "~ 刷新",
             ["Current"] = "当前",
@@ -137,7 +137,7 @@ public static class LanguageService
         // 繁体中文资源
         _resources["zh-TW"] = new Dictionary<string, string>
         {
-            ["AppTitle"] = "設定切換器",
+            ["AppTitle"] = "claude-code-switch",
             ["Add"] = "+ 新增",
             ["Refresh"] = "~ 重新整理",
             ["Current"] = "目前",
