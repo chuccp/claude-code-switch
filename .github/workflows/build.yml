@@ -123,6 +123,10 @@ jobs:
         with:
           path: ./artifacts
 
+      - name: 列出下载的产物目录结构
+        run: |
+          ls -la ./artifacts/
+
       - name: 打包 Windows 版本
         run: |
           cd ./artifacts/claude-code-switch-win
@@ -135,7 +139,9 @@ jobs:
 
       - name: 打包 macOS x64 版本
         run: |
+          ls -la ./artifacts/claude-code-switch-osx-x64/
           cd ./artifacts/claude-code-switch-osx-x64
+          ls -la
           zip -9 ../claude-code-switch-osx-x64.zip -r "Claude Code Switch.app"
 
       - name: 打包 macOS arm64 版本
