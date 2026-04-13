@@ -123,25 +123,6 @@ public partial class MainView : UserControl
         }
     }
 
-    private Window? GetWindow() => this.FindAncestorOfType<Window>();
-
-    private void OnTitleBarPointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        // 如果点击的是 ComboBox 或其子元素，不处理拖动
-        var source = e.Source as Visual;
-        while (source != null)
-        {
-            if (source is ComboBox)
-                return;
-            source = source.GetVisualParent() as Visual;
-        }
-
-        var window = GetWindow();
-        if (window == null) return;
-
-        // 开始拖动窗口
-        window.BeginMoveDrag(e);
-    }
 
     private void OnItemsControlSizeChanged(object? sender, SizeChangedEventArgs e)
     {
