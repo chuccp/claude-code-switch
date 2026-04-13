@@ -6,7 +6,9 @@
         Width="800" Height="600"
         MinWidth="600" MinHeight="400"
         WindowStartupLocation="CenterScreen"
-        CanResize="True">
+        CanResize="True"
+        ExtendClientAreaToDecorationsHint="False"
+        SystemDecorations="Full">
 
     <views:MainView/>
 </Window>
