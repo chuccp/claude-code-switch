@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
+        os: [windows-latest, ubuntu-latest, macos-latest, macos-13]
         include:
           - os: windows-latest
             artifact_name: claude-code-switch-win
@@ -21,7 +21,7 @@ jobs:
           - os: ubuntu-latest
             artifact_name: claude-code-switch-linux
             runtime: linux-x64
-          - os: macos-latest
+          - os: macos-13
             artifact_name: claude-code-switch-osx-x64
             runtime: osx-x64
           - os: macos-latest
