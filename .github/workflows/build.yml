@@ -72,7 +72,7 @@ jobs:
           mv ./publish/claude-code-switch "${APP_DIR}/Contents/MacOS/"
 
           # 复制图标
-          cp ../claude-code-switch/Assets/claude-code-switch.icns "${APP_DIR}/Contents/Resources/" 2>/dev/null || true
+          cp ../claude-code-switch/Assets/AppIcon.icns "${APP_DIR}/Contents/Resources/AppIcon.icns" 2>/dev/null || true
 
           # 创建 Info.plist
           cat > "${APP_DIR}/Contents/Info.plist" << 'EOF'
@@ -85,7 +85,7 @@ jobs:
               <key>CFBundleExecutable</key>
               <string>claude-code-switch</string>
               <key>CFBundleIconFile</key>
-              <string>claude-code-switch.icns</string>
+              <string>AppIcon</string>
               <key>CFBundleIdentifier</key>
               <string>com.claude-code-switch.app</string>
               <key>CFBundleInfoDictionaryVersion</key>

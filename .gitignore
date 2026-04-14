@@ -2,3 +2,8 @@
 /claude-code-switch/obj
 /claude-code-switch/bin
 config.json
+/.claude
+/claude-code-switch/publish-test
+*.zip
+/publish
+/claude-code-switch/publish
