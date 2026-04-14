@@ -4,8 +4,8 @@ language = "en"
 [window]
 width = 800
 height = 600
-x = 1320
-y = 594
+x = 880
+y = 406
 [dialog]
 width = 700
 height = 550
