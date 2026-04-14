@@ -8,7 +8,17 @@ namespace ConsoleApp1.Services;
 /// </summary>
 public static class StorageService
 {
-    private static readonly string ConfigPath = "config.json";
+    private static readonly string ConfigPath = GetConfigPath("config.json");
+
+    private static string GetConfigPath(string fileName)
+    {
+        var appDataDir = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "claude-code-switch");
+        if (!Directory.Exists(appDataDir))
+            Directory.CreateDirectory(appDataDir);
+        return Path.Combine(appDataDir, fileName);
+    }
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented = true,

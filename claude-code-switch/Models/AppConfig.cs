@@ -60,7 +60,17 @@ public class DialogConfig
 /// </summary>
 public static class ConfigManager
 {
-    private static readonly string ConfigPath = "appl.toml";
+    private static readonly string ConfigPath = GetAppConfigPath();
+
+    private static string GetAppConfigPath()
+    {
+        var appDataDir = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "claude-code-switch");
+        if (!Directory.Exists(appDataDir))
+            Directory.CreateDirectory(appDataDir);
+        return Path.Combine(appDataDir, "appl.toml");
+    }
 
     public static AppConfig LoadConfig()
     {
