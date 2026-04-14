@@ -325,8 +325,8 @@ public class MainViewModel : ReactiveObject
                 processStartInfo = new ProcessStartInfo
                 {
                     FileName = "osascript",
-                    Arguments = "-e 'tell application \"Terminal\" to do script \"claude\"'",
-                    UseShellExecute = true,
+                    Arguments = "-e 'tell application \"Terminal\" to do script \"claude\"' -e 'tell application \"Terminal\" to activate'",
+                    UseShellExecute = false,
                     WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)
                 };
             }
