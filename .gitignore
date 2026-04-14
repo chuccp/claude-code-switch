@@ -8,3 +8,4 @@ config.json
 /publish
 /claude-code-switch/publish
 /claude-code-switch/publish-release
+/.claude
