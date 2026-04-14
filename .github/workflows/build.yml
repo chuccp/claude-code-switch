@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest, macos-13]
+        os: [windows-latest, ubuntu-latest, macos-latest]
         include:
           - os: windows-latest
             artifact_name: claude-code-switch-win
@@ -21,9 +21,6 @@ jobs:
           - os: ubuntu-latest
             artifact_name: claude-code-switch-linux
             runtime: linux-x64
-          - os: macos-13
-            artifact_name: claude-code-switch-osx-x64
-            runtime: osx-x64
           - os: macos-latest
             artifact_name: claude-code-switch-osx-arm64
             runtime: osx-arm64
@@ -140,12 +137,6 @@ jobs:
           name: claude-code-switch-linux
           path: ./artifacts/claude-code-switch-linux
 
-      - name: 下载 macOS x64 产物
-        uses: actions/download-artifact@v4
-        with:
-          name: claude-code-switch-osx-x64
-          path: ./artifacts/claude-code-switch-osx-x64
-
       - name: 下载 macOS arm64 产物
         uses: actions/download-artifact@v4
         with:
@@ -155,7 +146,6 @@ jobs:
       - name: 列出目录结构
         run: |
           ls -la ./artifacts/
-          ls -la ./artifacts/claude-code-switch-osx-x64/
           find ./artifacts -name "*.app"
 
       - name: 打包 Windows 版本
@@ -168,14 +158,6 @@ jobs:
           cd ./artifacts/claude-code-switch-linux
           zip -9 -y ../claude-code-switch-linux.zip -r ./*
 
-      - name: 打包 macOS x64 版本
-        run: |
-          pwd
-          ls -la ./artifacts/claude-code-switch-osx-x64/
-          find ./artifacts/claude-code-switch-osx-x64 -name "*.app"
-          cd ./artifacts/claude-code-switch-osx-x64
-          zip -9 -y ../claude-code-switch-osx-x64.zip -r claude-code-switch.app
-
       - name: 打包 macOS arm64 版本
         run: |
           cd ./artifacts/claude-code-switch-osx-arm64
@@ -187,7 +169,6 @@ jobs:
           files: |
             ./artifacts/claude-code-switch-win.zip
             ./artifacts/claude-code-switch-linux.zip
-            ./artifacts/claude-code-switch-osx-x64.zip
             ./artifacts/claude-code-switch-osx-arm64.zip
           generate_release_notes: true
         env:
